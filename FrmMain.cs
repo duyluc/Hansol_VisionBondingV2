@@ -39,7 +39,6 @@ namespace Hansol_VisionBondingV2
         private void FrmMain_Load(object sender, EventArgs e)
         {
             this.Location = new Point(0, 0);//set vi tri ban dau cua phan mem
-            this.BackColor = Color.FromArgb(92, 164, 255);//set mau nen cho phan mem
         }
 
         private void QuitBtn_Click(object sender, EventArgs e)

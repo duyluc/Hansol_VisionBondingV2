@@ -34,6 +34,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ShowResultTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.MainTablePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +47,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.MainTablePanel.Controls.Add(this.groupBox2, 1, 1);
             this.MainTablePanel.Controls.Add(this.groupBox3, 0, 2);
             this.MainTablePanel.Controls.Add(this.groupBox4, 1, 2);
+            this.MainTablePanel.Controls.Add(this.ShowResultTablePanel, 0, 0);
             this.MainTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTablePanel.Location = new System.Drawing.Point(0, 0);
             this.MainTablePanel.Margin = new System.Windows.Forms.Padding(0);
@@ -97,6 +99,21 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Previous Product 1";
             // 
+            // ShowResultTablePanel
+            // 
+            this.ShowResultTablePanel.ColumnCount = 3;
+            this.ShowResultTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ShowResultTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ShowResultTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ShowResultTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ShowResultTablePanel.Location = new System.Drawing.Point(3, 3);
+            this.ShowResultTablePanel.Name = "ShowResultTablePanel";
+            this.ShowResultTablePanel.RowCount = 2;
+            this.ShowResultTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ShowResultTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ShowResultTablePanel.Size = new System.Drawing.Size(474, 114);
+            this.ShowResultTablePanel.TabIndex = 4;
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -116,5 +133,6 @@ namespace Hansol_VisionBondingV2.LUserControl
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TableLayoutPanel ShowResultTablePanel;
     }
 }

@@ -58,6 +58,12 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="LUserControl\AlarmPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LUserControl\AlarmPage.Designer.cs">
+      <DependentUpon>AlarmPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="LUserControl\MainPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LUserControl\AlarmPage.resx">
+      <DependentUpon>AlarmPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LUserControl\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>

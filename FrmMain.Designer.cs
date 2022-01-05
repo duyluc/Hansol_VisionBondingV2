@@ -176,7 +176,7 @@ namespace Hansol_VisionBondingV2
             this.MachineNameLabel.AutoSize = true;
             this.MachineNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MachineNameLabel.Font = new System.Drawing.Font("Microsoft YaHei", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MachineNameLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.MachineNameLabel.ForeColor = System.Drawing.Color.IndianRed;
             this.MachineNameLabel.Location = new System.Drawing.Point(323, 0);
             this.MachineNameLabel.Name = "MachineNameLabel";
             this.MachineNameLabel.Size = new System.Drawing.Size(313, 100);
@@ -233,6 +233,7 @@ namespace Hansol_VisionBondingV2
             this.TeachingBtn.Size = new System.Drawing.Size(91, 41);
             this.TeachingBtn.TabIndex = 3;
             this.TeachingBtn.UseVisualStyleBackColor = false;
+            this.TeachingBtn.Click += new System.EventHandler(this.TeachingBtn_Click);
             // 
             // AlarmBtn
             // 

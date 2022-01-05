@@ -84,6 +84,7 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ProgramHelper.cs" />
     <Compile Include="LUserControl\AlarmPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,6 +96,12 @@
     </Compile>
     <Compile Include="LUserControl\MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LUserControl\TeachingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LUserControl\TeachingPage.Designer.cs">
+      <DependentUpon>TeachingPage.cs</DependentUpon>
     </Compile>
     <Compile Include="PopupWindow\FrmAlarmPopup.cs">
       <SubType>Form</SubType>
@@ -112,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LUserControl\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LUserControl\TeachingPage.resx">
+      <DependentUpon>TeachingPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopupWindow\FrmAlarmPopup.resx">
       <DependentUpon>FrmAlarmPopup.cs</DependentUpon>

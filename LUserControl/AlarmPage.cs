@@ -27,20 +27,25 @@ namespace Hansol_VisionBondingV2.LUserControl
         public AlarmPage()
         {
             InitializeComponent();
-            AlarmInfo test = new AlarmInfo
-            {
-                Timeslap = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"),
-                Sender = "Master",
-                Message = "Demo"
-            };
-            AlarmList.Add(test);
             var bindinglist = new BindingList<AlarmInfo>(AlarmList);
             var source = new BindingSource(bindinglist, null);
             this.AlarmGridView.DataSource = source;
-            AlarmList.Add(test);
         }
 
-        
+        static public bool AddAlarm(string timeslap, string sender, string message, string level = "Info", string code = "0x00", string note = "None")
+        {
+            if (AlarmList == null) return false;
+            AlarmList.Add(new AlarmInfo
+            {
+                Timeslap = timeslap,
+                Sender = sender,
+                Message = message,
+                Level = level,
+                Code = code,
+                Note = note
+            });
+            return true;
+        }
 
         public static AlarmPage Instance
         {

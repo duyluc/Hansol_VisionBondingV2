@@ -55,6 +55,12 @@ namespace Hansol_VisionBondingV2
         private void FrmMain_Load(object sender, EventArgs e)
         {
             this.Location = new Point(0, 0);//set vi tri ban dau cua phan mem
+            this.MasterPanel.Controls.Add(MainPage.Instance);//hien thi Homepage lam page mac dinh
+
+            FrmMain.ResetColorButton();
+            FrmMain.Instance.HomeBtn.BackColor = Color.Green;
+            //test alarm
+            Helper.ProgramHelper.WriteLog("Master", "Startup Program");
         }
 
         private void QuitBtn_Click(object sender, EventArgs e)
@@ -72,6 +78,9 @@ namespace Hansol_VisionBondingV2
             this.MasterPanel.Controls.Add(MainPage.Instance);
             MainPage.Instance.Dock = DockStyle.Fill;
             MainPage.Instance.BringToFront();
+
+            FrmMain.ResetColorButton();
+            FrmMain.Instance.HomeBtn.BackColor = Color.Green;
         }
 
         private void AlarmBtn_Click(object sender, EventArgs e)
@@ -83,6 +92,9 @@ namespace Hansol_VisionBondingV2
                 this.MasterPanel.Controls.Add(AlarmPage.Instance);
                 AlarmPage.Instance.Dock = DockStyle.Fill;
                 AlarmPage.Instance.BringToFront();
+
+                FrmMain.ResetColorButton();
+                FrmMain.Instance.AlarmBtn.BackColor = Color.Green;
             }
             catch
             {
@@ -91,6 +103,20 @@ namespace Hansol_VisionBondingV2
                 AlarmPage.Instance.Dock = DockStyle.Fill;
                 AlarmPage.Instance.BringToFront();
             }
+        }
+        #region Utilities Method
+        static public void ResetColorButton()
+        {
+            FrmMain.Instance.HomeBtn.BackColor = Color.White;
+            FrmMain.Instance.TeachingBtn.BackColor = Color.White;
+            FrmMain.Instance.SettingBtn.BackColor = Color.White;
+            FrmMain.Instance.AlarmBtn.BackColor = Color.White;
+        }
+        #endregion
+
+        private void TeachingBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

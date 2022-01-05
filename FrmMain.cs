@@ -16,8 +16,24 @@ namespace Hansol_VisionBondingV2
         const int WM_NCHITTEST = 0x84;
         const int HTCLIENT = 0x1;
         const int HTCAPTION = 0x2;
+        static private FrmMain _instance;
+
+        public static FrmMain Instance
+        {
+            get
+            {
+                return _instance;
+            }
+
+            set
+            {
+                _instance = value;
+            }
+        }
+
         public FrmMain()
         {
+            Instance = this;
             InitializeComponent();
         }
         /// <summary>
@@ -51,10 +67,30 @@ namespace Hansol_VisionBondingV2
 
         private void HomeBtn_Click(object sender, EventArgs e)
         {
+            if (this.MasterPanel.Controls.Contains(MainPage.Instance)) return;
             this.MasterPanel.Controls.Clear();
             this.MasterPanel.Controls.Add(MainPage.Instance);
             MainPage.Instance.Dock = DockStyle.Fill;
             MainPage.Instance.BringToFront();
+        }
+
+        private void AlarmBtn_Click(object sender, EventArgs e)
+        {
+            if (this.MasterPanel.Controls.Contains(AlarmPage.Instance)) return;
+            this.MasterPanel.Controls.Clear();
+            try
+            {
+                this.MasterPanel.Controls.Add(AlarmPage.Instance);
+                AlarmPage.Instance.Dock = DockStyle.Fill;
+                AlarmPage.Instance.BringToFront();
+            }
+            catch
+            {
+                AlarmPage.Instance = null;
+                this.MasterPanel.Controls.Add(AlarmPage.Instance);
+                AlarmPage.Instance.Dock = DockStyle.Fill;
+                AlarmPage.Instance.BringToFront();
+            }
         }
     }
 }

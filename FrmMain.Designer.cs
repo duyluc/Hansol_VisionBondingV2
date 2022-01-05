@@ -245,6 +245,7 @@ namespace Hansol_VisionBondingV2
             this.AlarmBtn.Size = new System.Drawing.Size(91, 41);
             this.AlarmBtn.TabIndex = 2;
             this.AlarmBtn.UseVisualStyleBackColor = false;
+            this.AlarmBtn.Click += new System.EventHandler(this.AlarmBtn_Click);
             // 
             // SettingBtn
             // 
@@ -320,7 +321,7 @@ namespace Hansol_VisionBondingV2
         internal System.Windows.Forms.Button button2;
         internal System.Windows.Forms.Button button3;
         internal System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Panel MasterPanel;
+        public System.Windows.Forms.Panel MasterPanel;
     }
 }
 

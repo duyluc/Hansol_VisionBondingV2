@@ -14,20 +14,33 @@ namespace Hansol_VisionBondingV2.LUserControl
     {
         public class AlarmInfo
         {
-            public string Timeslap;
-            public string Sender;
-            public string Message;
-            public string Level;
-            public string Code = "0x00";
-            public string Note = "None";
+            public string Timeslap { get; set; }
+            public string Sender { get; set; }
+            public string Message { get; set; }
+            public string Level { get; set; } = "Info";
+            public string Code { get; set; } = "0x00";
+            public string Note { get; set; } = "None";
         }
         static private AlarmPage _instance;
-        //static private List<>
-
+        static public List<AlarmInfo> AlarmList = new List<AlarmInfo>();
+        
         public AlarmPage()
         {
             InitializeComponent();
+            AlarmInfo test = new AlarmInfo
+            {
+                Timeslap = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"),
+                Sender = "Master",
+                Message = "Demo"
+            };
+            AlarmList.Add(test);
+            var bindinglist = new BindingList<AlarmInfo>(AlarmList);
+            var source = new BindingSource(bindinglist, null);
+            this.AlarmGridView.DataSource = source;
+            AlarmList.Add(test);
         }
+
+        
 
         public static AlarmPage Instance
         {
@@ -41,6 +54,12 @@ namespace Hansol_VisionBondingV2.LUserControl
             {
                 _instance = value;
             }
+        }
+
+        private void FlowAlarmBtn_Click(object sender, EventArgs e)
+        {
+            //if (PopupWindow.FrmAlarmPopup.Instance != null) return;
+            PopupWindow.FrmAlarmPopup.Instance.Show();
         }
     }
 }

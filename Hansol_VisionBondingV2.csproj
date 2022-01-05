@@ -96,6 +96,12 @@
     <Compile Include="LUserControl\MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="PopupWindow\FrmAlarmPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopupWindow\FrmAlarmPopup.Designer.cs">
+      <DependentUpon>FrmAlarmPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
@@ -106,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LUserControl\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PopupWindow\FrmAlarmPopup.resx">
+      <DependentUpon>FrmAlarmPopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

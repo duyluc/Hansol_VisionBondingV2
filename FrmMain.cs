@@ -20,6 +20,10 @@ namespace Hansol_VisionBondingV2
         static private FrmMain _instance;
         public Helper.VisionOperator VisionOperator;
 
+        //event
+        public delegate void StartupCompleteDelegate();
+        public event StartupCompleteDelegate StartupCompleteEvent;
+
         public static FrmMain Instance
         {
             get
@@ -36,6 +40,8 @@ namespace Hansol_VisionBondingV2
         public FrmMain()
         {
             Instance = this;
+            FrmStartup startuppage = new FrmStartup();
+            startuppage.Show();
             InitializeComponent();
         }
         /// <summary>
@@ -58,13 +64,15 @@ namespace Hansol_VisionBondingV2
         {
             this.Location = new Point(0, 0);//set vi tri ban dau cua phan mem
             this.MasterPanel.Controls.Add(MainPage.Instance);//hien thi Homepage lam page mac dinh
-
             FrmMain.ResetColorButton();
             FrmMain.Instance.HomeBtn.BackColor = Color.Green;
             //test alarm
             Helper.ProgramHelper.WriteLog("Master", "Startup Program");
             //Initial Vision Object
             this.VisionOperator = new Helper.VisionOperator();
+
+            //goi event completestartupmainpage
+            StartupCompleteEvent();
         }
 
         private void QuitBtn_Click(object sender, EventArgs e)
@@ -133,6 +141,9 @@ namespace Hansol_VisionBondingV2
                 this.MasterPanel.Controls.Add(_settingpage);
                 _settingpage.Dock = DockStyle.Fill;
                 _settingpage.BringToFront();
+
+                FrmMain.ResetColorButton();
+                FrmMain.Instance.SettingBtn.BackColor = Color.Green;
             }
             catch
             {

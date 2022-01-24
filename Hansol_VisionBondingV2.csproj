@@ -98,6 +98,12 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmStartup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmStartup.Designer.cs">
+      <DependentUpon>FrmStartup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\ProgramHelper.cs" />
     <Compile Include="Helper\Vision.cs" />
     <Compile Include="LUserControl\AlarmPage.cs">
@@ -134,6 +140,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmStartup.resx">
+      <DependentUpon>FrmStartup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LUserControl\AlarmPage.resx">
       <DependentUpon>AlarmPage.cs</DependentUpon>

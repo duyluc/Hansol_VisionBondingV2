@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hansol_VisionBondingV2.LUserControl;
+using Hansol_VisionBondingV2;
 
 namespace Hansol_VisionBondingV2
 {
@@ -17,6 +18,7 @@ namespace Hansol_VisionBondingV2
         const int HTCLIENT = 0x1;
         const int HTCAPTION = 0x2;
         static private FrmMain _instance;
+        public Helper.VisionOperator VisionOperator;
 
         public static FrmMain Instance
         {
@@ -61,6 +63,8 @@ namespace Hansol_VisionBondingV2
             FrmMain.Instance.HomeBtn.BackColor = Color.Green;
             //test alarm
             Helper.ProgramHelper.WriteLog("Master", "Startup Program");
+            //Initial Vision Object
+            this.VisionOperator = new Helper.VisionOperator();
         }
 
         private void QuitBtn_Click(object sender, EventArgs e)
@@ -117,6 +121,28 @@ namespace Hansol_VisionBondingV2
         private void TeachingBtn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SettingBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.MasterPanel.Controls.Contains(SettingPage.Instance)) return;
+                this.MasterPanel.Controls.Clear();
+                SettingPage _settingpage = new SettingPage();
+                this.MasterPanel.Controls.Add(_settingpage);
+                _settingpage.Dock = DockStyle.Fill;
+                _settingpage.BringToFront();
+            }
+            catch
+            {
+                SettingPage.Instance = null;
+                this.MasterPanel.Controls.Clear();
+                this.MasterPanel.Controls.Add(AlarmPage.Instance);
+                AlarmPage.Instance.Dock = DockStyle.Fill;
+                AlarmPage.Instance.BringToFront();
+            }
+            
         }
     }
 }

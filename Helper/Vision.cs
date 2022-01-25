@@ -57,6 +57,7 @@ namespace Hansol_VisionBondingV2.Helper
         {
             try
             {
+                //<----------------------------------------------------------->
                 cam = LoadVppFile(CamConfigFilePath) as CogAcqFifoTool;
                 if (cam == null) ProgramHelper.ThrowEx("Can not load ConfigFile!");
                 return true;

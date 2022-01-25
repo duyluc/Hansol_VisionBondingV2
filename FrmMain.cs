@@ -14,9 +14,6 @@ namespace Hansol_VisionBondingV2
 {
     public partial class FrmMain : Form
     {
-        const int WM_NCHITTEST = 0x84;
-        const int HTCLIENT = 0x1;
-        const int HTCAPTION = 0x2;
         static private FrmMain _instance;
         public Helper.VisionOperator VisionOperator;
 
@@ -27,8 +24,15 @@ namespace Hansol_VisionBondingV2
         public delegate void LogoutDelegate();
         public event LogoutDelegate LogoutEvent;
 
-        private Timer cycletimer;
+        //su kien startuptimeout
+        public delegate void StartuptimeoutDelegate();
+        public event StartuptimeoutDelegate Startuptimeout;
+        /// <summary>
+        /// flag trang thai khoi dong chuong trinh
+        /// </summary>
+        private bool _startupcomplete = false;
 
+        private Timer cycletimer;
         public static FrmMain Instance
         {
             get
@@ -45,20 +49,12 @@ namespace Hansol_VisionBondingV2
         public FrmMain()
         {
             Instance = this;
+            //timer kich hoat timeout khoi dong chuong trinh
+            this.Startuptimeout += StartupTimeoutEvent;
+            Task _ = this._StartupWatchDog();
             FrmStartup startuppage = new FrmStartup();
             startuppage.Show();
             InitializeComponent();
-        }
-        /// <summary>
-        /// An thanh tieu de và giu lai tinh nang di chuyen window
-        /// </summary>
-        /// <param name="message"></param>
-        protected override void WndProc(ref Message message)
-        {
-            base.WndProc(ref message);
-
-            if (message.Msg == WM_NCHITTEST && (int)message.Result == HTCLIENT)
-                message.Result = (IntPtr)HTCAPTION;
         }
         /// <summary>
         /// Su kien window hoan thanh load
@@ -87,9 +83,9 @@ namespace Hansol_VisionBondingV2
             Helper.ProgramHelper.WriteLog("Master", "Startup Program");
             //Initial Vision Object
             this.VisionOperator = new Helper.VisionOperator();
-
             //goi event completestartupmainpage
             StartupCompleteEvent();
+            this._startupcomplete = true;
         }
 
         private void QuitBtn_Click(object sender, EventArgs e)
@@ -229,6 +225,23 @@ namespace Hansol_VisionBondingV2
             this.TeachingBtn.Enabled = true;
             this.AlarmBtn.Enabled = true;
             this.SettingBtn.Enabled = true;
+        }
+        /// <summary>
+        /// Method khi co su kien timeout startup
+        /// </summary>
+        public void StartupTimeoutEvent()
+        {
+            //StartupCompleteEvent();
+            this.Close();
+        }
+
+        public async Task _StartupWatchDog()
+        {
+            await Task.Delay(10000);
+            if (!this._startupcomplete)
+            {
+                this.Startuptimeout();
+            }
         }
     }
 }

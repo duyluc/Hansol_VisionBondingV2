@@ -29,8 +29,7 @@ namespace Hansol_VisionBondingV2.Helper
             {
                 if (alarm)
                 {
-                    if (LUserControl.AlarmPage.AddAlarm(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), t.Source.ToString(), t.Message));
-                    else return false;
+                    if (!LUserControl.AlarmPage.AddAlarm(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), t.Source.ToString(), t.Message)) return false;
                 }
                 if (popup)
                 {
@@ -49,8 +48,7 @@ namespace Hansol_VisionBondingV2.Helper
             {
                 if (alarm)
                 {
-                    if (LUserControl.AlarmPage.AddAlarm(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), t.Source.ToString(), t.Message,level,code,note));
-                    else return false;
+                    if (LUserControl.AlarmPage.AddAlarm(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), t.Source.ToString(), t.Message,level,code,note)) return false;
                 }
                 if (popup)
                 {
@@ -69,8 +67,7 @@ namespace Hansol_VisionBondingV2.Helper
             {
                 if (alarm)
                 {
-                    if (LUserControl.AlarmPage.AddAlarm(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), sender,message,level,code,note));
-                    else return false;
+                    if (!LUserControl.AlarmPage.AddAlarm(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), sender,message,level,code,note)) return false;
                 }
                 if (popup)
                 {

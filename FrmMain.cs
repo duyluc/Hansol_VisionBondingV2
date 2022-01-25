@@ -24,6 +24,11 @@ namespace Hansol_VisionBondingV2
         public delegate void StartupCompleteDelegate();
         public event StartupCompleteDelegate StartupCompleteEvent;
 
+        public delegate void LogoutDelegate();
+        public event LogoutDelegate LogoutEvent;
+
+        private Timer cycletimer;
+
         public static FrmMain Instance
         {
             get
@@ -62,6 +67,18 @@ namespace Hansol_VisionBondingV2
         /// <param name="e"></param>
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            //Timer kich hoat dinh ki
+            this.cycletimer = new Timer();
+            this.cycletimer.Interval = 100;
+            this.cycletimer.Tick += new EventHandler(CycleTimerTickEvent);
+            this.cycletimer.Start();
+
+            //Khoi tao form dang nhap
+            Login.Instance.SuccessfulEvent += this.LoginSuccessfulEvent;
+            this.TeachingBtn.Enabled = false;
+            this.AlarmBtn.Enabled = false;
+            this.SettingBtn.Enabled = false;
+
             this.Location = new Point(0, 0);//set vi tri ban dau cua phan mem
             this.MasterPanel.Controls.Add(MainPage.Instance);//hien thi Homepage lam page mac dinh
             FrmMain.ResetColorButton();
@@ -86,6 +103,7 @@ namespace Hansol_VisionBondingV2
         private void HomeBtn_Click(object sender, EventArgs e)
         {
             if (this.MasterPanel.Controls.Contains(MainPage.Instance)) return;
+            this.Loginbtn.Enabled = true;
             this.MasterPanel.Controls.Clear();
             this.MasterPanel.Controls.Add(MainPage.Instance);
             MainPage.Instance.Dock = DockStyle.Fill;
@@ -98,6 +116,7 @@ namespace Hansol_VisionBondingV2
         private void AlarmBtn_Click(object sender, EventArgs e)
         {
             if (this.MasterPanel.Controls.Contains(AlarmPage.Instance)) return;
+            this.Loginbtn.Enabled = false;
             this.MasterPanel.Controls.Clear();
             try
             {
@@ -128,7 +147,25 @@ namespace Hansol_VisionBondingV2
 
         private void TeachingBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (this.MasterPanel.Controls.Contains(TeachingPage.Instance)) return;
+                this.Loginbtn.Enabled = false;
+                this.MasterPanel.Controls.Clear();
+                this.MasterPanel.Controls.Add(TeachingPage.Instance);
+                TeachingPage.Instance.Dock = DockStyle.Fill;
+                TeachingPage.Instance.BringToFront();
 
+                FrmMain.ResetColorButton();
+                this.TeachingBtn.BackColor = Color.Green;
+            }
+            catch
+            {
+                AlarmPage.Instance = null;
+                this.MasterPanel.Controls.Add(AlarmPage.Instance);
+                AlarmPage.Instance.Dock = DockStyle.Fill;
+                AlarmPage.Instance.BringToFront();
+            }
         }
 
         private void SettingBtn_Click(object sender, EventArgs e)
@@ -136,6 +173,7 @@ namespace Hansol_VisionBondingV2
             try
             {
                 if (this.MasterPanel.Controls.Contains(SettingPage.Instance)) return;
+                this.Loginbtn.Enabled = false;
                 this.MasterPanel.Controls.Clear();
                 SettingPage _settingpage = new SettingPage();
                 this.MasterPanel.Controls.Add(_settingpage);
@@ -154,6 +192,43 @@ namespace Hansol_VisionBondingV2
                 AlarmPage.Instance.BringToFront();
             }
             
+        }
+        /// <summary>
+        /// Refresh dong ho va goi GC.Collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CycleTimerTickEvent(object sender, EventArgs e)
+        {
+            this.cycletimer.Stop();
+            GC.Collect();
+            this.WatcherLabel.Text = DateTime.Now.ToString("HH:mm:ss   dd/MM/yyyy");
+            this.cycletimer.Start();
+        }
+
+        private void Loginbtn_Click(object sender, EventArgs e)
+        {
+            if (!Login.Instance.Logined)
+            {
+                this.LevelAccessLabel.Text = "Operator";
+                Login.Instance.Show();
+            }
+            else
+            {
+                this.LogoutEvent();
+                this.LevelAccessLabel.Text = "Operator";
+                this.TeachingBtn.Enabled = false;
+                this.AlarmBtn.Enabled = false;
+                this.SettingBtn.Enabled = false;
+            }
+        }
+
+        private void LoginSuccessfulEvent()
+        {
+            this.LevelAccessLabel.Text = "Master";
+            this.TeachingBtn.Enabled = true;
+            this.AlarmBtn.Enabled = true;
+            this.SettingBtn.Enabled = true;
         }
     }
 }

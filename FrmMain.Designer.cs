@@ -136,6 +136,7 @@ namespace Hansol_VisionBondingV2
             this.Loginbtn.Size = new System.Drawing.Size(91, 41);
             this.Loginbtn.TabIndex = 1;
             this.Loginbtn.UseVisualStyleBackColor = false;
+            this.Loginbtn.Click += new System.EventHandler(this.Loginbtn_Click);
             // 
             // LevelAccessLabel
             // 

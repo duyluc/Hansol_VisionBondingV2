@@ -18,7 +18,7 @@ namespace Hansol_VisionBondingV2.LUserControl
         {
             Instance = this;
             InitializeComponent();
-            Helper.ProgramHelper.WriteLog("Master", "Opened Setting Page");
+            //Helper.ProgramHelper.WriteLog("Master", "Opened Setting Page");
             if(FrmMain.Instance.VisionOperator.Cam3D != null)
             {
                 this.AcFifoSetting.Subject = FrmMain.Instance.VisionOperator.Cam3D;

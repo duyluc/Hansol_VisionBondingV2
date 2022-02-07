@@ -68,7 +68,7 @@ namespace Hansol_VisionBondingV2
             this.HomePageMainTableLayout.RowCount = 2;
             this.HomePageMainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.HomePageMainTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.HomePageMainTableLayout.Size = new System.Drawing.Size(960, 884);
+            this.HomePageMainTableLayout.Size = new System.Drawing.Size(960, 1080);
             this.HomePageMainTableLayout.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -273,7 +273,7 @@ namespace Hansol_VisionBondingV2
             this.MasterPanel.Location = new System.Drawing.Point(0, 100);
             this.MasterPanel.Margin = new System.Windows.Forms.Padding(0);
             this.MasterPanel.Name = "MasterPanel";
-            this.MasterPanel.Size = new System.Drawing.Size(960, 784);
+            this.MasterPanel.Size = new System.Drawing.Size(960, 980);
             this.MasterPanel.TabIndex = 1;
             // 
             // FrmMain
@@ -281,7 +281,7 @@ namespace Hansol_VisionBondingV2
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(960, 884);
+            this.ClientSize = new System.Drawing.Size(960, 1080);
             this.Controls.Add(this.HomePageMainTableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmMain";

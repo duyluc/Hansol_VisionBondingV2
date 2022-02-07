@@ -12,6 +12,25 @@ namespace Hansol_VisionBondingV2.Helper
     {
         static public string DatabaseFolderPath = ".\\Database";
         static public string DbModel = Path.Combine(DatabaseFolderPath, "Model.db");
+        //Event Database thay doi
+        public delegate void ModelDbChangedDelegate();
+        public event ModelDbChangedDelegate ModelDbChange;
+
+        private static Database instance;
+
+        public static Database Instance
+        {
+            get
+            {
+                if (instance == null) instance = new Database();
+                return instance;
+            }
+
+            set
+            {
+                instance = value;
+            }
+        }
 
         public class Model
         {
@@ -37,6 +56,87 @@ namespace Hansol_VisionBondingV2.Helper
             public int ImageHeight { get; set; }
             public int LazerPower { get; set; } = 100;
             public int Brightness { get; set; } = 20;
+        }
+
+        static public bool AddModel(Model model)
+        {
+            if(model == null)
+            {
+                ProgramHelper.WriteLog("Master","Selected Model is Null!",true,true);
+                return false;
+            }
+            if (DbHelper.AddModel(model))
+            {
+                ProgramHelper.WriteLog("Master", "Add new Model successfully!");
+                System.Windows.Forms.MessageBox.Show("Add Model Successfully!");
+                Instance.ModelDbChange();
+                return true;
+            }
+            else
+            {
+                ProgramHelper.WriteLog("Master", "Add new Model Fail!");
+                System.Windows.Forms.MessageBox.Show("Add Model Fail!");
+                Instance.ModelDbChange();
+                return false;
+            }
+            
+        }
+
+        static public bool GetModel(List<Model> modelist)
+        {
+            if (!DbHelper.GetModel(modelist))
+            {
+                if (Instance.ModelDbChange == null) return false;
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        static public bool EditModel(Model model)
+        {
+            try
+            {
+                if (model == null) ProgramHelper.ThrowEx("Model is Null!");
+                System.Windows.Forms.DialogResult dlg =  System.Windows.Forms.MessageBox.Show($"Edit Model: {model.ModelName}","Warning!",System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (dlg != System.Windows.Forms.DialogResult.Yes) return false;
+            }
+            catch (Exception t)
+            {
+                ProgramHelper.WriteLog(t, true, true);
+                return false;
+            }
+            if (DbHelper.EditModel(model))
+            {
+                instance.ModelDbChange();
+                return true;
+            }
+            instance.ModelDbChange();
+            return false;
+        }
+
+        static public bool DelModel(Model model)
+        {
+            try
+            {
+                if (model == null) ProgramHelper.ThrowEx("Model is Null!");
+                System.Windows.Forms.DialogResult dlg = System.Windows.Forms.MessageBox.Show($"Delete Model: {model.ModelName}", "Warning!", System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (dlg != System.Windows.Forms.DialogResult.Yes) return false;
+            }
+            catch (Exception t)
+            {
+                ProgramHelper.WriteLog(t, true, true);
+                return false;
+            }
+            if (DbHelper.DeleteModel(model))
+            {
+                instance.ModelDbChange();
+                return true;
+            }
+            instance.ModelDbChange();
+            return false;
         }
     }
     public class DbHelper
@@ -65,6 +165,8 @@ namespace Hansol_VisionBondingV2.Helper
                 using (LiteDatabase db = new LiteDatabase(Database.DbModel))
                 {
                     var col = db.GetCollection<Database.Model>();
+                    Database.Model buffermodel = col.FindOne(x=>x.ModelName == model.ModelName) as Database.Model;
+                    if (buffermodel != null) ProgramHelper.ThrowEx("Model is Already Exits!");
                     col.Insert(model);
                 }
                 return true;
@@ -81,16 +183,17 @@ namespace Hansol_VisionBondingV2.Helper
         /// <param name="ModelName"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        static public bool GetModel(string ModelName, Database.Model model)
+        static public bool GetModel(List<Database.Model> modellist)
         {
             try
             {
                 using (LiteDatabase db = new LiteDatabase(Database.DbModel))
                 {
                     var col = db.GetCollection<Database.Model>();
-                    model = col.Find(x => x.ModelName == ModelName) as Database.Model;
+                    modellist.Clear();
+                    modellist.AddRange(col.FindAll().ToList());
                 }
-                if (model == null)
+                if (modellist.Count == 0)
                 {
                     return false;
                 }
@@ -98,7 +201,7 @@ namespace Hansol_VisionBondingV2.Helper
             }
             catch (Exception t)
             {
-                model = null;
+                modellist.Clear();
                 ProgramHelper.WriteLog(t, true, true);
                 return false;
             }
@@ -109,7 +212,7 @@ namespace Hansol_VisionBondingV2.Helper
         /// <param name="ModelName"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        static public bool EditModel(string ModelName, Database.Model model)
+        static public bool EditModel(Database.Model model)
         {
             try
             {
@@ -118,13 +221,13 @@ namespace Hansol_VisionBondingV2.Helper
                 using (LiteDatabase db = new LiteDatabase(Database.DbModel))
                 {
                     var col = db.GetCollection<Database.Model>();
-                    editmodel = col.Find(x => x.ModelName == ModelName) as Database.Model;
+                    editmodel = col.FindOne(x => x.ModelName == model.ModelName) as Database.Model;
                     if (editmodel == null)
                     {
                         ProgramHelper.ThrowEx("Model is not Exits");
                     }
                     model.Id = editmodel.Id;
-                    col.Update(model);
+                    if (!col.Update(model)) ProgramHelper.CreateEx("Edit Fail!");
                     return true;
                 }
             }
@@ -136,14 +239,14 @@ namespace Hansol_VisionBondingV2.Helper
             }
         }
 
-        static public bool DeleteModel(string ModelName)
+        static public bool DeleteModel(Database.Model model)
         {
             try
             {
                 using (LiteDatabase db = new LiteDatabase(Database.DbModel))
                 {
                     var col = db.GetCollection<Database.Model>();
-                    Database.Model deletemodel = col.Find(x => x.ModelName == ModelName) as Database.Model;
+                    Database.Model deletemodel = col.FindOne(x => x.ModelName == model.ModelName) as Database.Model;
                     if (deletemodel == null)
                     {
                         ProgramHelper.ThrowEx("Model is not Exits");

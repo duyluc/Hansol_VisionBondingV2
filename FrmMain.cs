@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hansol_VisionBondingV2.LUserControl;
 using Hansol_VisionBondingV2;
+using Hansol_VisionBondingV2.Helper;
 
 namespace Hansol_VisionBondingV2
 {
@@ -24,6 +25,9 @@ namespace Hansol_VisionBondingV2
         public delegate void LogoutDelegate();
         public event LogoutDelegate LogoutEvent;
 
+        //Event ModelList Changed
+        public delegate void ModelListChangedDelegate();
+        public event ModelListChangedDelegate ModelListChanged;
         //su kien startuptimeout
         public delegate void StartuptimeoutDelegate();
         public event StartuptimeoutDelegate Startuptimeout;
@@ -31,6 +35,23 @@ namespace Hansol_VisionBondingV2
         /// flag trang thai khoi dong chuong trinh
         /// </summary>
         private bool _startupcomplete = false;
+        private bool _blindAlarm = false;
+        public bool BlindAlarm
+        {
+            get
+            {
+                return _blindAlarm;
+            }
+            set
+            {
+                _blindAlarm = value;
+                if(value == false)
+                {
+                    this.AlarmBtn.BackColor = Color.White;
+                }
+            }
+        }
+        public Color CurrentBlindAlarmColor = Color.White;
 
         private Timer cycletimer;
         public static FrmMain Instance
@@ -45,6 +66,10 @@ namespace Hansol_VisionBondingV2
                 _instance = value;
             }
         }
+
+        ///List Luu tru cac model nhan tu database
+        public List<Database.Model> ModelList = new List<Database.Model>();
+        public Database.Model CurrentModel = null;
 
         public FrmMain()
         {
@@ -63,6 +88,8 @@ namespace Hansol_VisionBondingV2
         /// <param name="e"></param>
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            //kiem tra ton tai cac thu muc he thong can thiet
+            Helper.ProgramHelper.CheckSysFolder(true);
             //Timer kich hoat dinh ki
             this.cycletimer = new Timer();
             this.cycletimer.Interval = 100;
@@ -83,6 +110,12 @@ namespace Hansol_VisionBondingV2
             Helper.ProgramHelper.WriteLog("Master", "Startup Program");
             //Initial Vision Object
             this.VisionOperator = new Helper.VisionOperator();
+
+            //Khoi tao model list tu Database
+            Database.GetModel(this.ModelList);
+            Database.Instance.ModelDbChange += this.ModelListChange_Event;
+
+
             //goi event completestartupmainpage
             StartupCompleteEvent();
             this._startupcomplete = true;
@@ -111,6 +144,7 @@ namespace Hansol_VisionBondingV2
 
         private void AlarmBtn_Click(object sender, EventArgs e)
         {
+            this.BlindAlarm = false;
             if (this.MasterPanel.Controls.Contains(AlarmPage.Instance)) return;
             this.Loginbtn.Enabled = false;
             this.MasterPanel.Controls.Clear();
@@ -197,6 +231,17 @@ namespace Hansol_VisionBondingV2
         public void CycleTimerTickEvent(object sender, EventArgs e)
         {
             this.cycletimer.Stop();
+            if (this.BlindAlarm)
+            {
+                if(this.AlarmBtn.BackColor == Color.White)
+                {
+                    this.AlarmBtn.BackColor = Color.Red;
+                }
+                else
+                {
+                    this.AlarmBtn.BackColor = Color.White;
+                }
+            }
             GC.Collect();
             this.WatcherLabel.Text = DateTime.Now.ToString("HH:mm:ss   dd/MM/yyyy");
             this.cycletimer.Start();
@@ -243,5 +288,34 @@ namespace Hansol_VisionBondingV2
                 this.Startuptimeout();
             }
         }
+
+        public void ModelListChange_Event()
+        {
+            try
+            {
+                Database.GetModel(this.ModelList);
+                this.ModelListChanged();
+            }
+            catch(Exception t)
+            {
+                ProgramHelper.WriteLog(t);
+            }
+        }
+        /// <summary>
+        /// OverWrite ModelList Function
+        /// </summary>
+        /// <param name="data"></param>
+        public void ModelList_AddRange(List<Database.Model> data)
+        {
+            this.ModelList.AddRange(data);
+            this.ModelListChanged();
+        }
+
+        public void ModelList_Clear()
+        {
+            this.ModelList.Clear();
+            this.ModelListChanged();
+        }
+
     }
 }

@@ -15,10 +15,13 @@ namespace Hansol_VisionBondingV2.Helper
         {
             public string Path { get; set; }
             public Cognex.VisionPro.ToolBlock.CogToolBlock Subject { get; set; }
+            public object Clone()
+            {
+                return this.MemberwiseClone();
+            }
         }
         #region VisionObjec
         private CogAcqFifoTool _cam3D;
-
         public CogAcqFifoTool Cam3D
         {
             get
@@ -46,6 +49,7 @@ namespace Hansol_VisionBondingV2.Helper
                 _toolBlockList = value;
             }
         }
+        public List<string> ToolNameList = new List<string>();
         #endregion
         public VisionOperator()
         {
@@ -57,8 +61,10 @@ namespace Hansol_VisionBondingV2.Helper
             {
                 ///Load ConfileCamera
                 VisionHepler.LoadCamConfig(Cam3D);
+                if (!Directory.Exists(VisionHepler.SampleFileFolderPath)) Directory.CreateDirectory(VisionHepler.SampleFileFolderPath);
+                if (!Directory.Exists(VisionHepler.RunToolFolderPath)) Directory.CreateDirectory(VisionHepler.RunToolFolderPath);
+                if (!Directory.Exists(VisionHepler.ImageStoreFolerPath)) Directory.CreateDirectory(VisionHepler.ImageStoreFolerPath);
                 return true;
-                
             }
             catch(Exception t)
             {
@@ -74,6 +80,17 @@ namespace Hansol_VisionBondingV2.Helper
         static public string RunToolFolderPath = Path.Combine(VisionFolderPath, "RunToolFile");
         static public string ImageStoreFolerPath = Path.Combine(VisionFolderPath, "ImageStore");
         static public string CamConfigFilePath = Path.Combine(SampleFileFolderPath, "CAMConfig.vpp");
+        /// <summary>
+        /// Save Toolblock vao file
+        /// </summary>
+        /// <param name="toolname"></param>
+        /// <param name="tool"></param>
+        /// <returns></returns>
+        static public bool SaveToolBlock(string toolname, Cognex.VisionPro.ToolBlock.CogToolBlock tool)
+        {
+            if (!SaveVppFile(Path.Combine(RunToolFolderPath, toolname), tool)) return false;
+            return true;
+        }
         /// <summary>
         /// Load Toolblock tu file vpp vao Toollist
         /// </summary>
@@ -96,16 +113,21 @@ namespace Hansol_VisionBondingV2.Helper
                     VisionOperator.ToolBlock _ = null;
                     try
                     {
+                        Cognex.VisionPro.ToolBlock.CogToolBlock subject = LoadVppFile(Path.Combine(RunToolFolderPath,path)) as Cognex.VisionPro.ToolBlock.CogToolBlock;
+                        if (subject == null) ProgramHelper.ThrowEx("");
                          _ = new VisionOperator.ToolBlock
-                        {
-                            Path = path,
-                            Subject = LoadVppFile(path) as Cognex.VisionPro.ToolBlock.CogToolBlock
+                         {
+                             Path = path,
+                             Subject = subject
                         };
                         report += $"Load {path} -- OK\n";
                     }
                     catch
                     {
-                         _ = new VisionOperator.ToolBlock();
+                        _ = new VisionOperator.ToolBlock()
+                        {
+                            Path = path
+                        };
                         report += $"Load {path} -- NG\n";
                         result = false;
                     }
@@ -114,6 +136,7 @@ namespace Hansol_VisionBondingV2.Helper
                         toollist.Add(_);
                     }
                 }
+                System.Windows.Forms.MessageBox.Show(report);
                 return result;
             }
             catch(Exception t)
@@ -121,6 +144,23 @@ namespace Hansol_VisionBondingV2.Helper
                 ProgramHelper.WriteLog(t, true, true);
                 return false;
             }
+        }
+        /// <summary>
+        /// Tao danh sach ten toolblock
+        /// </summary>
+        /// <param name="modelname"></param>
+        /// <param name="toolnamelist"></param>
+        /// <returns></returns>
+        static public bool GetToolNameList(string modelname,List<string> toolnamelist)
+        {
+            if (toolnamelist == null) return false;
+            toolnamelist.Clear();
+            for(int i = 0; i < 8; i++)
+            {
+                string _ = modelname + $"_Tool{i + 1}.vpp";
+                toolnamelist.Add(_);
+            }
+            return true;
         }
         static public bool LoadCamConfig(CogAcqFifoTool cam)
         {
@@ -148,6 +188,19 @@ namespace Hansol_VisionBondingV2.Helper
             {
                 ProgramHelper.WriteLog(t);
                 return null;
+            }
+        }
+        static public bool SaveVppFile(String filepath,Cognex.VisionPro.ToolBlock.CogToolBlock _object)
+        {
+            try
+            {
+                CogSerializer.SaveObjectToFile(_object,filepath);
+                return true;
+            }
+            catch (Exception t)
+            {
+                ProgramHelper.WriteLog(t,true,true);
+                return false;
             }
         }
     }

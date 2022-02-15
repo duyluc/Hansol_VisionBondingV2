@@ -66,6 +66,16 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.ModelNameTbx = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.ToolEditGroup = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.BtnLoadToolBlock = new System.Windows.Forms.Button();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.BtnSaveToFile = new System.Windows.Forms.Button();
+            this.BtnApplySave = new System.Windows.Forms.Button();
+            this.BtnOpenFolder = new System.Windows.Forms.Button();
+            this.NNToolOrder = new System.Windows.Forms.NumericUpDown();
+            this.ToolBlockEditer = new Cognex.VisionPro.ToolBlock.CogToolBlockEditV2();
             this.ModelTableGoup.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ModelDataGridView)).BeginInit();
@@ -81,6 +91,11 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WidthNN)).BeginInit();
             this.panel1.SuspendLayout();
+            this.ToolEditGroup.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NNToolOrder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ToolBlockEditer)).BeginInit();
             this.SuspendLayout();
             // 
             // ModelTableGoup
@@ -88,7 +103,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.ModelTableGoup.Controls.Add(this.tableLayoutPanel1);
             this.ModelTableGoup.Location = new System.Drawing.Point(3, 3);
             this.ModelTableGoup.Name = "ModelTableGoup";
-            this.ModelTableGoup.Size = new System.Drawing.Size(450, 394);
+            this.ModelTableGoup.Size = new System.Drawing.Size(450, 391);
             this.ModelTableGoup.TabIndex = 0;
             this.ModelTableGoup.TabStop = false;
             this.ModelTableGoup.Text = "Model Table";
@@ -105,7 +120,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(444, 375);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(444, 372);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // ModelDataGridView
@@ -115,7 +130,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.ModelDataGridView.Location = new System.Drawing.Point(3, 3);
             this.ModelDataGridView.Name = "ModelDataGridView";
             this.ModelDataGridView.RowHeadersWidth = 51;
-            this.ModelDataGridView.Size = new System.Drawing.Size(373, 369);
+            this.ModelDataGridView.Size = new System.Drawing.Size(373, 366);
             this.ModelDataGridView.TabIndex = 0;
             this.ModelDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ModelDataGridView_CellDoubleClick);
             // 
@@ -127,7 +142,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(382, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(59, 369);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(59, 366);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // AddModelBtn
@@ -456,10 +471,143 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.label1.TabIndex = 0;
             this.label1.Text = "Model:";
             // 
+            // ToolEditGroup
+            // 
+            this.ToolEditGroup.Controls.Add(this.tableLayoutPanel3);
+            this.ToolEditGroup.Location = new System.Drawing.Point(6, 400);
+            this.ToolEditGroup.Name = "ToolEditGroup";
+            this.ToolEditGroup.Size = new System.Drawing.Size(951, 577);
+            this.ToolEditGroup.TabIndex = 2;
+            this.ToolEditGroup.TabStop = false;
+            this.ToolEditGroup.Text = "Tool Editer";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel2, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.ToolBlockEditer, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.526882F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.47312F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(945, 558);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.NNToolOrder);
+            this.flowLayoutPanel2.Controls.Add(this.BtnLoadToolBlock);
+            this.flowLayoutPanel2.Controls.Add(this.BtnSave);
+            this.flowLayoutPanel2.Controls.Add(this.BtnSaveToFile);
+            this.flowLayoutPanel2.Controls.Add(this.BtnApplySave);
+            this.flowLayoutPanel2.Controls.Add(this.BtnOpenFolder);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(939, 35);
+            this.flowLayoutPanel2.TabIndex = 0;
+            // 
+            // BtnLoadToolBlock
+            // 
+            this.BtnLoadToolBlock.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnLoadToolBlock.BackgroundImage")));
+            this.BtnLoadToolBlock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BtnLoadToolBlock.Location = new System.Drawing.Point(51, 3);
+            this.BtnLoadToolBlock.Name = "BtnLoadToolBlock";
+            this.BtnLoadToolBlock.Size = new System.Drawing.Size(31, 32);
+            this.BtnLoadToolBlock.TabIndex = 0;
+            this.BtnLoadToolBlock.UseVisualStyleBackColor = true;
+            this.BtnLoadToolBlock.Click += new System.EventHandler(this.BtnLoadToolBlock_Click);
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnSave.BackgroundImage")));
+            this.BtnSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BtnSave.Location = new System.Drawing.Point(88, 3);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(31, 32);
+            this.BtnSave.TabIndex = 1;
+            this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // BtnSaveToFile
+            // 
+            this.BtnSaveToFile.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnSaveToFile.BackgroundImage")));
+            this.BtnSaveToFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BtnSaveToFile.Location = new System.Drawing.Point(125, 3);
+            this.BtnSaveToFile.Name = "BtnSaveToFile";
+            this.BtnSaveToFile.Size = new System.Drawing.Size(31, 32);
+            this.BtnSaveToFile.TabIndex = 2;
+            this.BtnSaveToFile.UseVisualStyleBackColor = true;
+            this.BtnSaveToFile.Click += new System.EventHandler(this.BtnSaveToFile_Click);
+            // 
+            // BtnApplySave
+            // 
+            this.BtnApplySave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnApplySave.BackgroundImage")));
+            this.BtnApplySave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BtnApplySave.Location = new System.Drawing.Point(162, 3);
+            this.BtnApplySave.Name = "BtnApplySave";
+            this.BtnApplySave.Size = new System.Drawing.Size(31, 32);
+            this.BtnApplySave.TabIndex = 3;
+            this.BtnApplySave.UseVisualStyleBackColor = true;
+            this.BtnApplySave.Click += new System.EventHandler(this.BtnApplySave_Click);
+            // 
+            // BtnOpenFolder
+            // 
+            this.BtnOpenFolder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnOpenFolder.BackgroundImage")));
+            this.BtnOpenFolder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BtnOpenFolder.Location = new System.Drawing.Point(199, 3);
+            this.BtnOpenFolder.Name = "BtnOpenFolder";
+            this.BtnOpenFolder.Size = new System.Drawing.Size(31, 32);
+            this.BtnOpenFolder.TabIndex = 4;
+            this.BtnOpenFolder.UseVisualStyleBackColor = true;
+            this.BtnOpenFolder.Click += new System.EventHandler(this.BtnOpenFolder_Click);
+            // 
+            // NNToolOrder
+            // 
+            this.NNToolOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NNToolOrder.Location = new System.Drawing.Point(3, 4);
+            this.NNToolOrder.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.NNToolOrder.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.NNToolOrder.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NNToolOrder.Name = "NNToolOrder";
+            this.NNToolOrder.Size = new System.Drawing.Size(42, 29);
+            this.NNToolOrder.TabIndex = 5;
+            this.NNToolOrder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NNToolOrder.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // ToolBlockEditer
+            // 
+            this.ToolBlockEditer.AllowDrop = true;
+            this.ToolBlockEditer.ContextMenuCustomizer = null;
+            this.ToolBlockEditer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ToolBlockEditer.Location = new System.Drawing.Point(3, 44);
+            this.ToolBlockEditer.MinimumSize = new System.Drawing.Size(489, 0);
+            this.ToolBlockEditer.Name = "ToolBlockEditer";
+            this.ToolBlockEditer.ShowNodeToolTips = true;
+            this.ToolBlockEditer.Size = new System.Drawing.Size(939, 511);
+            this.ToolBlockEditer.SuspendElectricRuns = false;
+            this.ToolBlockEditer.TabIndex = 1;
+            // 
             // TeachingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ToolEditGroup);
             this.Controls.Add(this.ParametersGroup);
             this.Controls.Add(this.ModelTableGoup);
             this.Name = "TeachingPage";
@@ -484,6 +632,11 @@ namespace Hansol_VisionBondingV2.LUserControl
             ((System.ComponentModel.ISupportInitialize)(this.WidthNN)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.ToolEditGroup.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.NNToolOrder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ToolBlockEditer)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -526,5 +679,15 @@ namespace Hansol_VisionBondingV2.LUserControl
         internal System.Windows.Forms.NumericUpDown HeightNN;
         internal System.Windows.Forms.NumericUpDown WidthNN;
         internal System.Windows.Forms.TextBox ModelNameTbx;
+        private System.Windows.Forms.GroupBox ToolEditGroup;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Button BtnLoadToolBlock;
+        private System.Windows.Forms.Button BtnSave;
+        private System.Windows.Forms.Button BtnSaveToFile;
+        private System.Windows.Forms.Button BtnApplySave;
+        private System.Windows.Forms.Button BtnOpenFolder;
+        internal System.Windows.Forms.NumericUpDown NNToolOrder;
+        private Cognex.VisionPro.ToolBlock.CogToolBlockEditV2 ToolBlockEditer;
     }
 }

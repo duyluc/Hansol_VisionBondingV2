@@ -21,6 +21,22 @@ namespace Hansol_VisionBondingV2.LUserControl
             FrmMain.Instance.ModelListChanged += this.ModelListChanged_Event;
             this.ModelDataGridView.DataSource = FrmMain.Instance.ModelList;
             this.ModelDataGridView.Refresh();
+            this.ToolBlockEditer.Subject = new Cognex.VisionPro.ToolBlock.CogToolBlock();
+
+            ToolTip toolTip1 = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+
+            // Set up the ToolTip text for the Button and Checkbox.
+            toolTip1.SetToolTip(this.BtnLoadToolBlock, "Load Toolblock");
+            toolTip1.SetToolTip(this.BtnSave, "Apply Toolblock");
+            toolTip1.SetToolTip(this.BtnSaveToFile, "Save Toolblock To File");
+            toolTip1.SetToolTip(this.BtnApplySave, "Apply and Save Toolblock");
         }
 
         public static TeachingPage Instance
@@ -93,12 +109,15 @@ namespace Hansol_VisionBondingV2.LUserControl
             try
             {
                 FrmMain.Instance.CurrentModel = FrmMain.Instance.ModelList[index];
-                if (!ProgramHelper.FillParam()) ProgramHelper.ThrowEx("Load Model Fail!");
+                if(FrmMain.Instance.CurrentModel == null) ProgramHelper.ThrowEx("Load Model Fail!");
+                if (!ProgramHelper.FillParam()) ProgramHelper.ThrowEx("Fill Model Fail!");
+                if(!Helper.VisionHepler.GetToolNameList(FrmMain.Instance.CurrentModel.ModelName, FrmMain.Instance.VisionOperator.ToolNameList)) ProgramHelper.ThrowEx("Load Tool Name List Fail!");
+                if (!Helper.VisionHepler.LoadToolBlock(FrmMain.Instance.VisionOperator.ToolBlockList, FrmMain.Instance.VisionOperator.ToolNameList)) ProgramHelper.ThrowEx("Load Toolblock Fail!");
                 MessageBox.Show("Load Model is Successfully!");
             }
             catch (Exception t)
             {
-                FrmMain.Instance.CurrentModel = null;
+                if(t.Message == "Fill Model Fail!") FrmMain.Instance.CurrentModel = null;
                 ProgramHelper.WriteLog(t, true, true);
             }
             
@@ -149,6 +168,76 @@ namespace Hansol_VisionBondingV2.LUserControl
             {
                 ProgramHelper.WriteLog(t, true, true);
             }
+        }
+
+        private void BtnLoadToolBlock_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = Convert.ToInt32(this.NNToolOrder.Value);
+                if (FrmMain.Instance.VisionOperator.ToolBlockList == null) ProgramHelper.ThrowEx("Load ToolBlock Error!");
+                if (FrmMain.Instance.VisionOperator.ToolBlockList.Count == 0) ProgramHelper.ThrowEx("Load ToolBlock Error!");
+                VisionOperator.ToolBlock ToolClone = FrmMain.Instance.VisionOperator.ToolBlockList[index - 1].Clone() as VisionOperator.ToolBlock;
+                this.ToolBlockEditer.Subject = ToolClone.Subject;
+            }
+            catch(Exception t)
+            {
+                ProgramHelper.WriteLog(t, false, true);
+            }
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = Convert.ToInt32(this.NNToolOrder.Value);
+                if (FrmMain.Instance.VisionOperator.ToolBlockList == null) ProgramHelper.ThrowEx("Apply ToolBlock Error!");
+                if (FrmMain.Instance.VisionOperator.ToolBlockList.Count == 0) ProgramHelper.ThrowEx("Apply ToolBlock Error!");
+                FrmMain.Instance.VisionOperator.ToolBlockList[index-1].Subject = this.ToolBlockEditer.Subject;
+                MessageBox.Show("Apply!");
+            }
+            catch(Exception t)
+            {
+                ProgramHelper.WriteLog(t, false, true);
+            }
+        }
+
+        private void BtnSaveToFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = Convert.ToInt32(this.NNToolOrder.Value);
+                if (FrmMain.Instance.VisionOperator.ToolBlockList == null) ProgramHelper.ThrowEx("Save ToolBlock Error!");
+                if (FrmMain.Instance.VisionOperator.ToolBlockList.Count == 0) ProgramHelper.ThrowEx("Save ToolBlock Error!");
+                if (!VisionHepler.SaveToolBlock(FrmMain.Instance.VisionOperator.ToolBlockList[index-1].Path, this.ToolBlockEditer.Subject)) ProgramHelper.ThrowEx("Save ToolBlock Error!");
+                MessageBox.Show("Saved!");
+            }
+            catch (Exception t)
+            {
+                ProgramHelper.WriteLog(t, false, true);
+            }
+        }
+
+        private void BtnApplySave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = Convert.ToInt32(this.NNToolOrder.Value);
+                if (FrmMain.Instance.VisionOperator.ToolBlockList == null) ProgramHelper.ThrowEx("Error!");
+                if (FrmMain.Instance.VisionOperator.ToolBlockList.Count == 0) ProgramHelper.ThrowEx("Error!");
+                FrmMain.Instance.VisionOperator.ToolBlockList[index - 1].Subject = this.ToolBlockEditer.Subject;
+                if (!VisionHepler.SaveToolBlock(FrmMain.Instance.VisionOperator.ToolBlockList[index - 1].Path, this.ToolBlockEditer.Subject)) ProgramHelper.ThrowEx("Error!");
+                MessageBox.Show("Apply and Saved!");
+            }
+            catch (Exception t)
+            {
+                ProgramHelper.WriteLog(t, false, true);
+            }
+        }
+
+        private void BtnOpenFolder_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(VisionHepler.RunToolFolderPath);
         }
     }
 }

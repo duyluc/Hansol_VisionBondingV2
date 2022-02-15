@@ -37,5 +37,10 @@ namespace Hansol_VisionBondingV2.LUserControl
                 _instance = value;
             }
         }
+
+        private void BtnConnect_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

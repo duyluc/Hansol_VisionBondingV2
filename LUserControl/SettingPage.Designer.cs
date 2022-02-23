@@ -35,13 +35,14 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.AcFifoSetting = new Cognex.VisionPro.CogAcqFifoEditV2();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.LabelConnectStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.BtnConnect = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.TbxPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.TbxIp = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.LabelConnectStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BtnDisconnect = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AcFifoSetting)).BeginInit();
@@ -99,6 +100,7 @@ namespace Hansol_VisionBondingV2.LUserControl
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.BtnDisconnect);
             this.groupBox2.Controls.Add(this.statusStrip1);
             this.groupBox2.Controls.Add(this.BtnConnect);
             this.groupBox2.Controls.Add(this.label2);
@@ -111,6 +113,22 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Community";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LabelConnectStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(3, 70);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(462, 22);
+            this.statusStrip1.TabIndex = 11;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // LabelConnectStatus
+            // 
+            this.LabelConnectStatus.Name = "LabelConnectStatus";
+            this.LabelConnectStatus.Size = new System.Drawing.Size(123, 17);
+            this.LabelConnectStatus.Text = "STATUS: DISCONNECT";
             // 
             // BtnConnect
             // 
@@ -165,21 +183,16 @@ namespace Hansol_VisionBondingV2.LUserControl
             this.TbxIp.Text = "127.0.1.10";
             this.TbxIp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // statusStrip1
+            // BtnDisconnect
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LabelConnectStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(3, 70);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(462, 22);
-            this.statusStrip1.TabIndex = 11;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // LabelConnectStatus
-            // 
-            this.LabelConnectStatus.Name = "LabelConnectStatus";
-            this.LabelConnectStatus.Size = new System.Drawing.Size(123, 17);
-            this.LabelConnectStatus.Text = "STATUS: DISCONNECT";
+            this.BtnDisconnect.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BtnDisconnect.BackgroundImage")));
+            this.BtnDisconnect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnDisconnect.Location = new System.Drawing.Point(368, 34);
+            this.BtnDisconnect.Name = "BtnDisconnect";
+            this.BtnDisconnect.Size = new System.Drawing.Size(42, 32);
+            this.BtnDisconnect.TabIndex = 12;
+            this.BtnDisconnect.UseVisualStyleBackColor = true;
+            this.BtnDisconnect.Click += new System.EventHandler(this.BtnDisconnect_Click);
             // 
             // SettingPage
             // 
@@ -214,5 +227,6 @@ namespace Hansol_VisionBondingV2.LUserControl
         private System.Windows.Forms.TextBox TbxIp;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel LabelConnectStatus;
+        public System.Windows.Forms.Button BtnDisconnect;
     }
 }

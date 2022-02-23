@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hansol_VisionBondingV2.Helper;
 
 namespace Hansol_VisionBondingV2.LUserControl
 {
@@ -40,7 +41,14 @@ namespace Hansol_VisionBondingV2.LUserControl
 
         private void BtnConnect_Click(object sender, EventArgs e)
         {
+            if (FrmMain.Instance.Com.IsRunning) FrmMain.Instance.Com.InteruptBridge();
+            FrmMain.Instance.Com.RunBridge();
+            Task _ = FrmMain.Instance.Com.Run();
+        }
 
+        private void BtnDisconnect_Click(object sender, EventArgs e)
+        {
+            FrmMain.Instance.Com.InteruptBridge();
         }
     }
 }

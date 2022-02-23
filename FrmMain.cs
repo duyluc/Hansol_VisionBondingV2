@@ -71,6 +71,9 @@ namespace Hansol_VisionBondingV2
         public List<Database.Model> ModelList = new List<Database.Model>();
         public Database.Model CurrentModel = null;
 
+        //Com Instance
+        public COM Com;
+
         public FrmMain()
         {
             Instance = this;
@@ -119,6 +122,10 @@ namespace Hansol_VisionBondingV2
             //goi event completestartupmainpage
             StartupCompleteEvent();
             this._startupcomplete = true;
+            //Initial Com
+            this.Com = new COM("127.0.0.1", 1111);
+            //-->TestMode
+            LoginSuccessfulEvent();
         }
 
         private void QuitBtn_Click(object sender, EventArgs e)

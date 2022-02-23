@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,9 +15,20 @@ namespace Hansol_VisionBondingV2
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+            bool IsOneInstance = false;
+            using(Mutex mutex = new Mutex(true, "VisionBonding",out IsOneInstance))
+            {
+                if (IsOneInstance)
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new FrmMain());
+                }
+                else
+                {
+                    MessageBox.Show("Application is Running");
+                }
+            }
         }
     }
 }

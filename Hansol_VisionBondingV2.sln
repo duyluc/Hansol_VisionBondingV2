@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hansol_VisionBondingV2", "Hansol_VisionBondingV2.csproj", "{D2D129D8-FF49-4BD6-BC87-E546828FA500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community", "..\Community\Community.csproj", "{E2219E41-D6E0-45B7-A136-845358BD3705}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community", "Community\Community.csproj", "{E2219E41-D6E0-45B7-A136-845358BD3705}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
